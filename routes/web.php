@@ -28,3 +28,8 @@ Route::get('topics/{topic}/{slug?}', 'TopicsController@show')->name('topics.show
 Route::resource('replies', 'RepliesController', ['only' => ['store', 'destroy']]);
 Route::resource('notifications', 'NotificationsController', ['only' => ['index']]);
 Route::get('permission-denied', 'PagesController@permissionDenied')->name('permission-denied');
+
+// 显示 pdf
+Route::get('pdf/topics/{topic}', 'TopicsController@pdf')->name('topics.show.pdf');
+// 显示 Image
+Route::get('image/topics/{topic}', 'TopicsController@image')->name('topics.show.image');

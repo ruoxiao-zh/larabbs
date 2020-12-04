@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use PDF;
+use SnappyImage;
 use App\Models\Topic;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -16,7 +18,7 @@ class TopicsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['index', 'show']]);
+        $this->middleware('auth', ['except' => ['index', 'show', 'pdf']]);
     }
 
 	public function index(Request $request, Topic $topic, User $user, Link $link)
@@ -96,5 +98,29 @@ class TopicsController extends Controller
             }
         }
         return $data;
+    }
+
+    public function pdf(Topic $topic)
+    {
+        // 测试环境中，关闭sudosu 插件
+        if (app()->isLocal()) {
+            config(['sudosu.enable' => false]);
+        }
+
+//        return PDF::loadView('topics.show', compact('topic'))->download('topics-' .$topic->id. '.pdf');
+        return PDF::loadView('topics.show', compact('topic'))->inline('topics-' .$topic->id. '.pdf');
+    }
+
+    public function image(Topic $topic)
+    {
+        // 测试环境中，关闭sudosu 插件
+        if (app()->isLocal()) {
+            config(['sudosu.enable' => false]);
+        }
+
+        return SnappyImage::loadView('topics.show', compact('topic'))
+//            ->setOption('width', 595)
+            ->setOption('format', 'png')
+            ->inline('topics-' .$topic->id. '.png');
     }
 }
