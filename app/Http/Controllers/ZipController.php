@@ -44,13 +44,15 @@ class ZipController extends Controller
         foreach ($topics as $topic) {
             $pdf_file = $save_path . 'topics-' . $topic->id . '.pdf';
 
-            PDF::loadView('topics.show', compact('topic'))
-                ->setPaper('a4')
-                ->setOption('run-script', true)
-                ->setOption('javascript-delay', 1600)//javascript执行等待时间|毫秒
-                ->setOption('no-stop-slow-scripts', true)
-                ->setTemporaryFolder($temporary_path)
-                ->save($pdf_file);
+            if (!File::exists($pdf_file)) {
+                PDF::loadView('topics.show', compact('topic'))
+                    ->setPaper('a4')
+                    ->setOption('run-script', true)
+                    ->setOption('javascript-delay', 1600)//javascript执行等待时间|毫秒
+                    ->setOption('no-stop-slow-scripts', true)
+                    ->setTemporaryFolder($temporary_path)
+                    ->save($pdf_file);
+            }
 
             if (File::exists($pdf_file)) {
                 // 将文件加入 zip 包
