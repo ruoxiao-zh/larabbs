@@ -33,3 +33,8 @@ Route::get('permission-denied', 'PagesController@permissionDenied')->name('permi
 Route::get('pdf/topics/{topic}', 'TopicsController@pdf')->name('topics.show.pdf');
 // 显示 Image
 Route::get('image/topics/{topic}', 'TopicsController@image')->name('topics.show.image');
+
+// package chumper/zipper
+Route::get('zip', 'ZipController@index')->name('zip.index');
+Route::post('zip/download', 'ZipController@download')->name('zip.download');
+Route::post('zip/upload', 'ZipController@upload')->name('zip.upload');
