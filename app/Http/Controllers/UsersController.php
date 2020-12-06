@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use QrCode;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Http\Requests\UserRequest;
@@ -11,7 +12,12 @@ class UsersController extends Controller
 {
     public function show(User $user)
     {
-        return view('users.show', compact('user'));
+        $qrcode = QrCode::format('png')
+            ->size(300)
+            ->margin(0)
+            ->generate(route('users.show', $user));
+
+        return view('users.show', compact('user', 'qrcode'));
     }
 
     public function edit(User $user)

@@ -3,6 +3,15 @@
 
 @section('title', $user->name . ' 的个人中心')
 
+@section('styles')
+    <style type="text/css">
+        .qrcode svg {
+            width: 100%;
+            height: auto;
+        }
+    </style>
+@endsection
+
 @section('content')
 
 <div class="row">
@@ -28,6 +37,20 @@
                 </div>
             </div>
         </div>
+        
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="media">
+                    <div align="center">
+                        {{--                       <span class="thumbnail img-responsive qrcode">--}}
+                        {{--                            {!! $qrcode !!}--}}
+                        {{--                        </span>--}}
+                        <img class="thumbnail img-responsive" src="data:image/png;base64, {!! base64_encode($qrcode) !!}">
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
     <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
         <div class="panel panel-default">
